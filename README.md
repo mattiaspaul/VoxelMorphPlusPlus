@@ -53,5 +53,8 @@ unet_model = Unet(ConvBlock,inshape,infeats=2,nb_features=nb_unet_features,nb_le
 ```
 The model has 901'888 trainable parameters and produces 64 output features.
 
-The keypoint loss is a simple mean-squared error penalty loss = nn.MSELoss()(pred_xyz,disp_gt[idx])```
-    def __init__(self, ndims, in_channels, out_channels, stride=1):
+The keypoint loss is a simple mean-squared error penalty 
+```
+loss = nn.MSELoss()(pred_xyz,disp_gt[idx])
+
+
