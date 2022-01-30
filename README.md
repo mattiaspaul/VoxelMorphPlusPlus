@@ -33,9 +33,7 @@ def default_unet_features():
     nb_features = [
         [32, 48, 48, 64],[64, 48, 48, 48, 48, 32, 64]]
     return nb_features
-unet_model = Unet(ConvBlock,inshape,infeats=2,nb_features=nb_unet_features,nb_levels=nb_unet_levels,\
-            feat_mult=unet_feat_mult,nb_conv_per_level=nb_unet_conv_per_level,half_res=unet_half_res,)
-            
+
 class ConvBlock(nn.Module):
     def __init__(self, ndims, in_channels, out_channels, stride=1):
         super().__init__()
@@ -48,6 +46,9 @@ class ConvBlock(nn.Module):
         out = self.activation(self.norm(self.main(x)))
         out = self.activation2(self.norm2(self.main2(out)))
         return out
+unet_model = Unet(ConvBlock,inshape,infeats=2,nb_features=nb_unet_features,nb_levels=nb_unet_levels,\
+            feat_mult=unet_feat_mult,nb_conv_per_level=nb_unet_conv_per_level,half_res=unet_half_res,)
+            
 
 ```
 The model has 901'888 trainable parameters and produces 64 output features.
