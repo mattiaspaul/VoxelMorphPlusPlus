@@ -56,5 +56,11 @@ The model has 901'888 trainable parameters and produces 64 output features.
 The keypoint loss is a simple mean-squared error penalty 
 ```
 loss = nn.MSELoss()(pred_xyz,disp_gt[idx])
+```
+## Example inference
+To run this code you need scans resampled to 1.75 x 1.25 x 1.75 mm (exhale) and 1.75 x 1.00 x 1.25 mm (inspiration) with dimensions 192 x 192 x 208 voxels. For each of them a binary lung mask should be provided (we will soon make available a segmentation network that can automate both steps). Pre-trained models are available under data. To reproduce our DIRlab-COPD evaluation experiment simple run the following (which will automatically select the correct cross-validation folds):
+```
+folds=(0 4 5 4 3 5 3 2 1 2 1)
+for i in {01..10}; do python inference_voxelmorph_plusplus.py -F COPDgene/case_${i}_exp.nii.gz -M COPDgene/case_${i}_insp.nii.gz -f COPDgene/case_${i}_exp_mask.nii.gz -m COPDgene/case_${i}_insp_mask.nii.gz-n l2r_lung_ct/repeat_l2r_voxelmorph_heatmap_keypoint_fold${folds[10#$i]}.pth -d COPDgene/disp_${i}.pth -c ${i}; done
 
 
