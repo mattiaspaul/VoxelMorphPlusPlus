@@ -62,5 +62,6 @@ To run this code you need scans resampled to 1.75 x 1.25 x 1.75 mm (exhale) and 
 ```
 folds=(0 4 5 4 3 5 3 2 1 2 1)
 for i in {01..10}; do python inference_voxelmorph_plusplus.py -F COPDgene/case_${i}_exp.nii.gz -M COPDgene/case_${i}_insp.nii.gz -f COPDgene/case_${i}_exp_mask.nii.gz -m COPDgene/case_${i}_insp_mask.nii.gz-n l2r_lung_ct/repeat_l2r_voxelmorph_heatmap_keypoint_fold${folds[10#$i]}.pth -d COPDgene/disp_${i}.pth -c ${i}; done
-
+```
+There are options -d and -w to write out displacement fields and warped moving scan to files. If neither is supplied an coronal overlay png is created. 
 
