@@ -9,6 +9,23 @@ The recent Learn2Reg challenge shows that single-scale U-Net architectures (e.g.
 
 **VoxelMorph++** robustly estimates large deformations using the discretised heatmaps and unlike PDD-Net does not require a fully discretised architecture with correlation layer. If no keypoints are available heatmaps can still be used in an unsupervised using only a nonlocal MIND metric. 
 
-We outperform VoxelMorph by improving nonlinear alignment by 77% compared to 22% - reaching target registration errors of 2 mm on the DIRlab-COPD dataset. Extending the method to semantic features sets new stat-of-the-art performance of 70% on inter-subject abdominal CT registration. 
+We outperform VoxelMorph by improving nonlinear alignment by 77% compared to 22% - reaching target registration errors of 2 mm on the DIRlab-COPD dataset. Extending the method to semantic features sets new stat-of-the-art performance of 70% on inter-subject abdominal CT registration. Our network can be trained within 17 minutes on a single RTX A4000 with a carbon footprint of less than 20 grams.
 
-![](wbir2022_voxelmorph2.png | width=300)
+![Overview figure](wbir2022_voxelmorph2.png)
+
+## Implementation
+We slightly adapt the basic Voxelmorph U-Net as a backbone baseline, adding some more convolutions and feature channels
+```
+unet_half_res=True
+def default_unet_features():
+    nb_features = [
+        [32, 48, 48, 64],             # encoder
+        [64, 48, 48, 48, 48, 32, 64]  # decoder
+    ]
+    return nb_features
+
+#print('unet_model',countParameters(unet_model))
+
+
+unet_model = Unet(inshape,infeats=14,nb_features=nb_unet_features,nb_levels=nb_unet_levels,\
+            feat_mult=unet_feat_mult,nb_conv_per_level=nb_unet_conv_per_level,half_res=unet_half_res,)
