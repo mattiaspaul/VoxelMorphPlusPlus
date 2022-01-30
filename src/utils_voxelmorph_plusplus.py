@@ -40,7 +40,7 @@ def MINDSSC(img, radius=2, dilation=2):
     dist = pdist_squared(six_neighbourhood.t().unsqueeze(0)).squeeze(0)
     
     # define comparison mask
-    x, y = torch.meshgrid(torch.arange(6), torch.arange(6))
+    x, y = torch.meshgrid(torch.arange(6), torch.arange(6),indexing='ij')
     mask = ((x > y).view(-1) & (dist == 2).view(-1))
     
     # build kernel
@@ -290,7 +290,8 @@ class TPS:
         A[:n, -4:] = P
         A[-4:, :n] = P.t()
 
-        theta = torch.solve(v, A)[0]
+        theta = torch.linalg.solve(A,v)
+        #theta = torch.solve(v, A)[0]
         return theta
         
     @staticmethod
@@ -403,7 +404,8 @@ def get_datasets(nomind=False):
         keypts_all_mov.append(keypts_mov)
         keypts_all_fix.append(keypts_fix)
 
-        mean_mask = F.grid_sample(mask_all_fix[ii:ii+1],keypts_fix.view(1,-1,1,1,3).cpu()).mean()+F.grid_sample(mask_all_mov[ii:ii+1],keypts_mov.view(1,-1,1,1,3).cpu()).mean()
+        mean_mask = F.grid_sample(mask_all_fix[ii:ii+1],keypts_fix.view(1,-1,1,1,3).cpu(),align_corners=False).mean()+\
+        F.grid_sample(mask_all_mov[ii:ii+1],keypts_mov.view(1,-1,1,1,3).cpu(),align_corners=False).mean()
         if(mean_mask<1.97):
             print(ii,i,'mean_mask',mean_mask)
         grid_sp = 2
