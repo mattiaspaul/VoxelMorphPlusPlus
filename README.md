@@ -11,4 +11,4 @@ The recent Learn2Reg challenge shows that single-scale U-Net architectures (e.g.
 
 We outperform VoxelMorph by improving nonlinear alignment by 77% compared to 22% - reaching target registration errors of 2 mm on the DIRlab-COPD dataset. Extending the method to semantic features sets new stat-of-the-art performance of 70% on inter-subject abdominal CT registration. 
 
-![](wbir2022_voxelmorph2 | width=300)
+![](wbir2022_voxelmorph2.png | width=300)
