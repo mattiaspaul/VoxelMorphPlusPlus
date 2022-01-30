@@ -145,7 +145,7 @@ if __name__ == "__main__":
 
     heatmap = nn.Sequential(nn.ConvTranspose3d(64,16,7),nn.InstanceNorm3d(16),nn.ReLU(),\
                             nn.Conv3d(16,32,3,padding=1),nn.InstanceNorm3d(32),\
-                            nn.ReLU(),nn.Conv3d(32,32,3,padding=1),nn.Upsample(size(11,11,11),mode='trilinear'),\
+                            nn.ReLU(),nn.Conv3d(32,32,3,padding=1),nn.Upsample(size=(11,11,11),mode='trilinear'),\
                             nn.Conv3d(32,32,3,padding=1),nn.InstanceNorm3d(64),nn.ReLU(),                
                             nn.Conv3d(32,32,3,padding=1),nn.InstanceNorm3d(32),nn.ReLU(),\
                             nn.Conv3d(32,16,3,padding=1),nn.InstanceNorm3d(16),nn.ReLU(),nn.Conv3d(16,1,3,padding=1))
