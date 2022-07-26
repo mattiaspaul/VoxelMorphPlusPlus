@@ -222,7 +222,7 @@ if __name__ == "__main__":
             input = F.pad(torch.cat((mind_fix,mind_mov),1),(4,4,8,8,8,8)).cuda()
             output = unet_model(input)[:,:,4:-4,4:-4,2:-2]
 
-            sample_xyz = keypts_fix#keypts_all_fix[int(ii)][idx]#fix
+            sample_xyz = keypts_fix[idx]#keypts_all_fix[int(ii)][idx]#fix
             #todo nearest vs bilinear
             #sampled = F.grid_sample(output,sample_xyz.cuda().view(1,-1,1,1,3)+patch.view(1,1,-1,1,3),mode='bilinear')
             sampled = F.grid_sample(output,sample_xyz.cuda().view(1,-1,1,1,3),mode='bilinear')
