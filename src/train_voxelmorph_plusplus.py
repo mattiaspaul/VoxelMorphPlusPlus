@@ -189,7 +189,7 @@ if __name__ == "__main__":
         moving_mask = mask_all_mov[ii].view(1,1,H,W,D).cuda().half()
 
         #Affine augmentation of images *and* keypoints 
-        if(i%2==1):
+        if(i%2==0):
             A = (torch.randn(3,4)*.035+torch.eye(3,4)).cuda()
             affine = F.affine_grid(A.unsqueeze(0),(1,1,H,W,D))
             keypts_fix = torch.solve(torch.cat((keypts_fix,torch.ones(keypts_fix.shape[0],1).cuda()),1).t(),\
@@ -222,7 +222,7 @@ if __name__ == "__main__":
             input = F.pad(torch.cat((mind_fix,mind_mov),1),(4,4,8,8,8,8)).cuda()
             output = unet_model(input)[:,:,4:-4,4:-4,2:-2]
 
-            sample_xyz = keypts_all_fix[int(ii)][idx]
+            sample_xyz = keypts_fix#keypts_all_fix[int(ii)][idx]#fix
             #todo nearest vs bilinear
             #sampled = F.grid_sample(output,sample_xyz.cuda().view(1,-1,1,1,3)+patch.view(1,1,-1,1,3),mode='bilinear')
             sampled = F.grid_sample(output,sample_xyz.cuda().view(1,-1,1,1,3),mode='bilinear')
