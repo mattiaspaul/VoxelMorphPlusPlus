@@ -13,6 +13,11 @@ We outperform VoxelMorph by improving nonlinear alignment by 77% compared to 22%
 
 ![Overview figure](wbir2022_voxelmorph2.png)
 
+## Citation
+If you find (parts of) this method useful in your work please consider citing:
+
+"Voxelmorph++ going beyond the cranial vault with keypoint supervision and multi-channel instance optimisation." by Heinrich, Mattias P., and Lasse Hansen.  In Biomedical Image Registration: 10th International Workshop, WBIR 2022, Munich, Germany, July 10–12, 2022, Proceedings, pp. 85-95. Cham: Springer International Publishing, 2022.
+
 ## Implementation
 Our core new element is the heatmap prediction network head, which requires a number of 1D feature vectors sampled at keypoints as input and predicts a discretised heatmap of shape 11x11x11:
 ```
